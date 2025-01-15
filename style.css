@@ -1,0 +1,375 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+    margin: 25px 0px;
+}
+
+#calculatorAll {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items: flex-start;
+}
+
+#outerCalc {
+    padding: 20px;
+    border: 5px solid #626161;
+    border-radius: 10px;
+    background-color: #EFECAA;
+    box-shadow: 10px 10px 8px #888888;
+}
+
+#display {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+    align-items: center;
+    width: 230px;
+    height: 50px;
+    background-color: white;
+    border: 1px solid lightgray;
+    box-shadow: -1px -1px #888888;
+    margin-bottom: 20px;
+    font-size: 25px;
+    font-weight: 700;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#corrections {
+    display: flex;
+    justify-content: space-between;
+    width: 230px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.corrButton {
+    width: 110px;
+    height: 50px;
+    background-color: #C392D2;
+}
+
+#backspace {
+    font-size: 30px;
+}
+
+#squareButtonContainer {
+    display: flex;
+    width: 230px;
+    height: 230px;
+}
+
+#numContainer {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 180px;
+    height: 230px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.num {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background-color: #F0C998;
+}
+
+#operContainer {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 50px;
+    height: 230px;
+}
+
+.oper {
+    width: 50px;
+    height: 50px;
+    background-color: #A0DD85;
+}
+
+button {
+    font-size: 20px;
+    border: 2px solid #626161;
+    border-radius: 3px;
+    box-shadow: 3px 3px 2px #888888;
+}
+
+button:active {
+    transform: translateY(5px);
+    transform: translateX(3px);
+    box-shadow: 2px 2px 1px #888888;
+}
+
+#neg, #equals {
+    background-color: #E9A8A6;
+}
+
+#outerVisual {
+    border: 5px solid #626161;
+    border-radius: 10px;
+    width: 70vw;
+    height: 80vh;
+    margin-left: 70px;
+    display: flex;
+    flex-direction: column;
+}
+
+#equationVisual {
+    font-size: 50px;
+    font-weight: 700;
+    font-family: 'Courier New', Courier, monospace;
+    height: 10%;
+}
+
+#pictureVisual {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 90%;
+}
+
+.circle {
+    width: 150px;               /* Set width */
+    height: 150px;              /* Set height to the same as width for a circle */
+    background-color: #E9A8A6; /* Set background color */
+    border-radius: 50%;          /* Make it a circle */
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.countDisplay {
+    height: 30px;
+    font-size: 25px;
+    font-weight: 700;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+}
+
+.stack {
+    width: 0px;
+    word-break: break-all;
+}
+
+.dotGroup {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    width: 140px;
+}
+
+.dot {
+    width: 20px;               /* Set width */
+    height: 20px;              /* Set height to the same as width for a circle */
+    background-color: #C392D2; /* Set background color */
+    border: 1px solid black;
+    border-radius: 50%;          /* Make it a circle */
+    margin: 5px;
+}
+
+/* .dotGroup {
+    border: 2px solid black;
+} */
+
+
+/* Addition CSS */
+
+#additionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    width: 100%;
+    height: 100%;
+}
+
+#numberLineDiv {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: start;
+    width: 100%;
+    height: 50%;
+}
+
+#horizontalLine {
+    background-color: black;
+    box-sizing: content-box;
+    height: 5px;
+    width: 99%;
+    display: flex;
+    align-items:center;
+    padding-right: 10px;
+}
+
+.startVerticalContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 46px;
+    margin-top: 30px;
+}
+
+.countingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 30px;
+}
+
+.verticalLine {
+    background-color: black;
+    height: 30px;
+    width: 5px;
+}
+
+/* Subtraction CSS */
+
+#subtractionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    width: 100%;
+    height: 100%;
+}
+
+#subNumberLineDiv {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: start;
+    width: 100%;
+    height: 50%;
+}
+
+.endVerticalContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 46px;
+    margin-top: 30px;
+}
+
+#subHorizontalLine {
+    background-color: black;
+    box-sizing: content-box;
+    height: 5px;
+    width: 99%;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items:center;
+    padding-left: 10px;
+}
+
+.subCountingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 30px;
+}
+
+/* Arrow CSS */
+
+#arrowContainer {
+    display: flex;
+    align-items: end;
+    margin-left: 39px;
+    margin-bottom: 13px;
+  }
+
+#subArrowContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: end;
+    margin-right: 39px;
+    margin-bottom: 13px;
+    }
+
+.arrowDiv {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+    /* star */
+    .starContainer {
+        position: relative;
+        display: flex; 
+        justify-content: center;
+        align-items: center;
+    }
+    .fivePointedStar {
+        --star-color: #F0C998;
+        margin:1em auto;
+        position: absolute;
+        display: block;
+        width: 0px;
+        height: 0px;
+        border-right: 1em solid transparent;
+        border-bottom: 0.7em solid var(--star-color);
+        border-left: 1em solid transparent;
+        transform: translate(-50%, -50%) rotate(35deg);
+        top: 10%;
+        left: 50%; /* Center horizontally */
+        z-index: 1; /* Ensure the star is behind the number */
+       }
+       .fivePointedStar:before {
+        border-bottom: 0.8em solid var(--star-color);
+        border-left: 0.3em solid transparent;
+        border-right: 0.3em solid transparent;
+        position: absolute;
+        height: 0;
+        width: 0;
+        top: -0.45em;
+        left: -0.65em;
+        display: block;
+        content:"";
+        transform: rotate(-35deg);
+        z-index: 1; /* Ensure the star is behind the number */
+       }
+       .fivePointedStar:after {
+        position: absolute;
+        display: block;
+        top: 0.03em;
+        left: -1.05em;
+        width: 0;
+        height: 0;
+        border-right: 1em solid transparent;
+        border-bottom: 0.7em solid var(--star-color);
+        border-left: 1em solid transparent;
+        transform: rotate(-70deg);
+        content:"";
+        z-index: 1; /* Ensure the star is behind the number */
+       }
+       
+       .starNumber {
+        position: absolute;
+        top: 55%;
+        left: 48%;
+        color: black; 
+        transform: translate(-50%, -50%); 
+        font-size: 1em;
+        font-weight: bold;
+        z-index: 2; /* Ensure the number is above the star */
+    }
