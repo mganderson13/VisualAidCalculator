@@ -162,15 +162,13 @@ function fillInSubtractionNumberLine(numB) {
                 -8, 0, arrowCanvas.width-1, arrowCanvas.height // Destination rectangle
             );
             gameFrame++;
-            ctx.font= "bold 25px Courier New"
-            ctx.fillText(`-${increment}`, arrowDiv.width/2.4, 20);
             requestAnimationFrame(animate); // Continue animation
         } else {
             frameY = spriteAnimations['leftArrow'].loc[5].y;
             ctx.drawImage(
                 arrowImage,
                 0, frameY, spriteWidth, spriteHeight, // Source rectangle
-                -8, 0, arrowDiv.width-1, arrowDiv.height// Destination rectangle
+                -8, 0, arrowCanvas.width-1, arrowCanvas.height// Destination rectangle
             );
             }
         }
