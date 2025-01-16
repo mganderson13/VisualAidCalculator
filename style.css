@@ -147,17 +147,7 @@ button:active {
     height: 90%;
 }
 
-.circle {
-    width: 150px;               /* Set width */
-    height: 150px;              /* Set height to the same as width for a circle */
-    background-color: #E9A8A6; /* Set background color */
-    border-radius: 50%;          /* Make it a circle */
-    margin: 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
+/* Animation Css */ 
 
 .countDisplay {
     height: 30px;
@@ -172,6 +162,26 @@ button:active {
     word-break: break-all;
 }
 
+/*Multiplication and Division */
+
+#circleGroup {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.circle {
+    width: 150px;               /* Set width */
+    height: 150px;              /* Set height to the same as width for a circle */
+    background-color: #E9A8A6; /* Set background color */
+    border-radius: 50%;          /* Make it a circle */
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
 .dotGroup {
     display: flex;
     flex-direction: row;
@@ -182,19 +192,47 @@ button:active {
     width: 140px;
 }
 
+.startDotGroup {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    padding: 10px;
+    width: 320px;
+}
+
 .dot {
-    width: 20px;               /* Set width */
-    height: 20px;              /* Set height to the same as width for a circle */
-    background-color: #C392D2; /* Set background color */
+    width: 20px;              
+    height: 20px;              
+    background-color: #C392D2; 
     border: 1px solid black;
-    border-radius: 50%;          /* Make it a circle */
+    border-radius: 50%;          
     margin: 5px;
 }
 
-/* .dotGroup {
-    border: 2px solid black;
-} */
+/* Classes fade-out and hidden are targeted at the startDots for division. 
+They begin with an opacity of 1 and then fade to 0. */
 
+.fade-out {
+    opacity: 1;
+}
+
+.fade-out.hidden {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+/* Classes fade-target and fade-in are targeted at the dots within the circles for division.
+They begin with an opacity of 0 and then fade to 1. */
+
+.fade-target {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+.fade-target.fade-in {
+    opacity: 1;
+}
 
 /* Addition CSS */
 

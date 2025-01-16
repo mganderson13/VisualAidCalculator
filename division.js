@@ -3,7 +3,7 @@ function createStartDivDots() {
     startDotGroup.classList.add("startDotGroup");
     for (let i = 1; i <= numA; i++ ) {
         const startDot = document.createElement("div");
-        startDot.classList.add("startDot", "fade-out");
+        startDot.classList.add("dot", "fade-out");
         startDot.id = "startDot" + i;
         startDotGroup.appendChild(startDot);
     }
@@ -36,7 +36,7 @@ function createDivCircles() {
 }
 window.createDivCircles = createDivCircles;
 
-function createEndDivDots(answer) {
+function createEndDivDots(answer, numB) {
     const dotGroups = document.querySelectorAll(".dotGroup");
     // const countDisplays = document.querySelectorAll(".countDisplays");
 
@@ -65,13 +65,13 @@ function createEndDivDots(answer) {
     for (let j = 0; j < answer; j++) {
         setTimeout(() => {
             for (let k = 1; k <= numB; k++) {
-                const startDot = document.querySelector(`#startDot${j * numB + k}`);
+                const startDot = document.getElementById(`startDot${j * numB + k}`);
                 if (startDot) {
                     startDot.classList.add("hidden"); 
                 }
             }
         }, j * 1000 + 500);
     }
-
+    
 }
 window.createEndDivDots = createEndDivDots;

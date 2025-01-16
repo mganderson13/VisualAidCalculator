@@ -98,7 +98,7 @@ function readEnter() {
             let answerRounded = Math.floor(answer);
             let remainder = numA % numB;
             createDivCircles();
-            createEndDivDots(answerRounded);
+            createEndDivDots(answerRounded, numB);
             currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
             if(!remainder) {
                 equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
