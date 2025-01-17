@@ -32,6 +32,9 @@ function appendDotGroup(index) {
     for (let i = 1; i <= numB; i++) {
         const dot = document.createElement("div");
         dot.classList.add("dot");
+        if (numB > 16) {
+            dot.style.margin= "2px";
+        }
         dotGroup.appendChild(dot);
     }
     //puts group of numB dots into circle
