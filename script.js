@@ -97,8 +97,10 @@ function readEnter() {
         } else if(operator === "/") {
             let answerRounded = Math.floor(answer);
             let remainder = numA % numB;
+            if (numB <= 20 && (numA/numB) <= 25) {
             createDivCircles();
-            createEndDivDots(answerRounded, numB);
+            createEndDivDots(answerRounded, numB, numA);
+            }
             currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
             if(!remainder) {
                 equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);

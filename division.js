@@ -16,27 +16,25 @@ function createDivCircles() {
     circleGroup.id = "circleGroup";
 
     for (let i = 1; i <= numB; i++ ) {
-        const circleAndCount = document.createElement("div");
-        circleAndCount.classList.add("circleAndCount");
         const circle = document.createElement("div");
         circle.classList.add("circle");
         circle.id = "circle" + i;
+        if (numB > 15) {
+            circle.style.width= "120px";
+            circle.style.height= "120px";
+        }
         const dotGroup = document.createElement("div");
         dotGroup.classList.add("dotGroup");
-        const countDisplay = document.createElement("div");
-        countDisplay.classList.add("countDisplay");
 
-        circleAndCount.appendChild(circle);
         circle.appendChild(dotGroup);
-        circleAndCount.appendChild(countDisplay);
-        circleGroup.appendChild(circleAndCount);
+        circleGroup.appendChild(circle);
     }
 
     pictureVisual.appendChild(circleGroup);
 }
 window.createDivCircles = createDivCircles;
 
-function createEndDivDots(answer, numB) {
+function createEndDivDots(answer, numB, numA) {
     const dotGroups = document.querySelectorAll(".dotGroup");
     // const countDisplays = document.querySelectorAll(".countDisplays");
 
@@ -46,6 +44,9 @@ function createEndDivDots(answer, numB) {
             const dot = document.createElement("div");
             dot.classList.add("dot", "fade-target");
             dot.dataset.id = i;
+            if ((numA/numB) > 16) {
+                dot.style.margin= "2px";
+            }
             dotGroup.appendChild(dot);
         });
     };
