@@ -63,8 +63,12 @@ const numBArray = numB.split("")
  }
  //calculate numberline 
  let units = (horizontalLine.offsetWidth-45)/((hundreds*4)+(tens*2)+ones);
- if (units > 100) {
+ console.log(units);
+ if (hundreds > 0 && units > 100) {
     units=100;
+ }
+ if (hundreds === 0 && units > 200) {
+    units=200;
  }
 
 //arrow animation setup
