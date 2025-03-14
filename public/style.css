@@ -101,6 +101,7 @@ h1 {
 }
 
 .oper {
+    font-size: 25px;
     width: 50px;
     height: 50px;
     background-color: #A0DD85;
@@ -127,8 +128,10 @@ button:active {
     border: 5px solid #626161;
     border-radius: 10px;
     width: 70vw;
-    height: 80vh;
+    min-height: 80vh;
     margin-left: 70px;
+
+    /* Are these two necessary? */
     display: flex;
     flex-direction: column;
 }
@@ -148,7 +151,6 @@ button:active {
 }
 
 /* Animation Css */ 
-
 .countDisplay {
     height: 30px;
     font-size: 25px;
@@ -160,6 +162,15 @@ button:active {
 .stack {
     width: 0px;
     word-break: break-all;
+}
+
+#canvas {
+    width: 100%;
+    height: auto;
+    min-width: 800px;
+    min-height: 400px;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 /*Multiplication and Division */
@@ -235,181 +246,3 @@ They begin with an opacity of 0 and then fade to 1. */
 .fade-target.fade-in {
     opacity: 1;
 }
-
-/* Addition CSS */
-
-#additionContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    width: 100%;
-    height: 100%;
-}
-
-#numberLineDiv {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: start;
-    width: 100%;
-    height: 50%;
-}
-
-#horizontalLine {
-    background-color: black;
-    box-sizing: content-box;
-    height: 5px;
-    width: 99%;
-    display: flex;
-    align-items:center;
-    padding-right: 10px;
-}
-
-.startVerticalContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    width: 46px;
-    margin-top: 30px;
-}
-
-.countingContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin-top: 30px;
-}
-
-.verticalLine {
-    background-color: black;
-    height: 30px;
-    width: 5px;
-}
-
-/* Subtraction CSS */
-
-#subtractionContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    width: 100%;
-    height: 100%;
-}
-
-#subNumberLineDiv {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: start;
-    width: 100%;
-    height: 50%;
-}
-
-.endVerticalContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 46px;
-    margin-top: 30px;
-}
-
-#subHorizontalLine {
-    background-color: black;
-    box-sizing: content-box;
-    height: 5px;
-    width: 99%;
-    display: flex;
-    flex-direction: row-reverse;
-    align-items:center;
-    padding-left: 10px;
-}
-
-.subCountingContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: 30px;
-}
-
-/* Arrow CSS */
-
-#arrowContainer {
-    display: flex;
-    align-items: end;
-    margin-left: 39px;
-    margin-bottom: 13px;
-  }
-
-#subArrowContainer {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: end;
-    margin-right: 39px;
-    margin-bottom: 13px;
-    }
-
-.arrowDiv {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-}
-
-    /* star */
-    .starContainer {
-        position: relative;
-        display: flex; 
-        justify-content: center;
-        align-items: center;
-    }
-    .fivePointedStar {
-        --star-color: #F0C998;
-        margin:1em auto;
-        position: absolute;
-        display: block;
-        width: 0px;
-        height: 0px;
-        border-right: 1em solid transparent;
-        border-bottom: 0.7em solid var(--star-color);
-        border-left: 1em solid transparent;
-        transform: translate(-50%, -50%) rotate(35deg);
-        top: 10%;
-        left: 50%; /* Center horizontally */
-        z-index: 1; /* Ensure the star is behind the number */
-       }
-       .fivePointedStar:before {
-        border-bottom: 0.8em solid var(--star-color);
-        border-left: 0.3em solid transparent;
-        border-right: 0.3em solid transparent;
-        position: absolute;
-        height: 0;
-        width: 0;
-        top: -0.45em;
-        left: -0.65em;
-        display: block;
-        content:"";
-        transform: rotate(-35deg);
-        z-index: 1; /* Ensure the star is behind the number */
-       }
-       .fivePointedStar:after {
-        position: absolute;
-        display: block;
-        top: 0.03em;
-        left: -1.05em;
-        width: 0;
-        height: 0;
-        border-right: 1em solid transparent;
-        border-bottom: 0.7em solid var(--star-color);
-        border-left: 1em solid transparent;
-        transform: rotate(-70deg);
-        content:"";
-        z-index: 1; /* Ensure the star is behind the number */
-       }
-       
-       .starNumber {
-        position: absolute;
-        top: 55%;
-        left: 48%;
-        color: black; 
-        transform: translate(-50%, -50%); 
-        font-size: 1em;
-        font-weight: bold;
-        z-index: 2; /* Ensure the number is above the star */
-    }

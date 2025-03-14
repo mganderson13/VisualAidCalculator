@@ -36,7 +36,6 @@ window.createDivCircles = createDivCircles;
 
 function createEndDivDots(answer, numB, numA) {
     const dotGroups = document.querySelectorAll(".dotGroup");
-    // const countDisplays = document.querySelectorAll(".countDisplays");
 
     // uses the "answer" variable to add hidden dots to the circles
     for (let i = 1; i <= answer; i++) {
@@ -56,7 +55,6 @@ function createEndDivDots(answer, numB, numA) {
         setTimeout(() => {
             const dotsToFadeIn = document.querySelectorAll(`.dot[data-id="${i}"]`);
             dotsToFadeIn.forEach((dot) => {
-                // dot.classList.remove("fade-out");
                 dot.classList.add("fade-in");
             });
         }, i * 1000);

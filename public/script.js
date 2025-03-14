@@ -9,6 +9,7 @@ let equationVisual = document.getElementById("equationVisual");
 let pictureVisual = document.getElementById("pictureVisual");
 let dec = document.getElementById("dec");
 
+
 function add(a, b) {
     return a + b;
 };
@@ -38,6 +39,8 @@ function doOperation(firstNum, secondNum, operation) {
         return multiply(firstNum, secondNum);
     } else if(operation === "/") {
         return divide(firstNum, secondNum);
+    } else {
+        return "huh?";
     }
 }
 
@@ -64,9 +67,11 @@ function readOper(sentOper) {
         equationVisual.innerHTML = numA + " " + operator;
         //create circles/dots/numberline
         if (operator === "+" && numA < 1000) {
-            createAddLine();
+            initializeCanvas();
+            createAddLine(numA);
         } else if(operator === "-" && numA < 1000) {
-            createSubtractionLine();
+            initializeCanvas();
+            createSubtractionLine(numA);
         } else if(operator === "*" && numA <= 20) {
             createMultCircles();
         } else if (operator === "/" && numA <= 100) {
@@ -80,7 +85,7 @@ function readEnter() {
     if(typeof(answer) === "number") {
         if (operator === "+") {
             if (numA < 1000 && numB < 1000) {
-            fillInNumberLine(numB);
+                animateAddition(numA, numB);
             }else {
                 largeNumbers();
             }
@@ -88,7 +93,7 @@ function readEnter() {
             equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         } else if (operator === "-") {
             if (numA < 1000 && numB < 1000) {
-            fillInSubtractionNumberLine(numB);
+                animateSubtraction(numA, numB);
             }else {
                 largeNumbers();
             }
@@ -96,12 +101,12 @@ function readEnter() {
             equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         } else if (operator === "*"){
             if (numA <= 20 && numB <= 20) {
-            createMultDots(numB);
+                createMultDots(numB);
             }else {
                 largeNumbers();
             }
-        currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
-        equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+            currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+            equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         } else if(operator === "/") {
             let answerRounded = Math.floor(answer);
             let remainder = numA % numB;
@@ -118,20 +123,20 @@ function readEnter() {
                     equationVisual.innerHTML = 
                         numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answerRounded + 'e' + 7) + "e-" + 7) + " with remainder " + remainder
             };
-            } 
-        } else {
+        }
+    } else {
         currentDisplay.innerHTML = "ERROR";
         equationVisual.innerHTML = "ERROR";
         numA = "";
     }  
-    //reset values in function
+    //reset values in function and run with setTimeout so dont mess up display
     function resetValues() {
         numA= "";
         onNumA = true;
         numB = "";
         operator = "";
     }
-    resetValues();
+     resetValues();
 }
 
 function readClear() {
@@ -160,5 +165,5 @@ function largeNumbers() {
     pictureVisual.style.fontSize = "40px";
     pictureVisual.style.padding = "50px";
     pictureVisual.style.paddingTop = "100px";
-    pictureVisual.innerHTML = "That's a large number! If you would like to see a visual of the equation, try with smaller numbers! 😁";
+    pictureVisual.innerHTML = "Too big for a visual! Try smaller numbers. 😁";
 }

@@ -1,73 +1,77 @@
-function createSubtractionLine() {
-    const pictureVisualDiv = document.getElementById("pictureVisual");
+function createSubtractionLine(numA) {
+    const canvas = document.getElementById('canvas')
+    const ctx = canvas.getContext('2d');
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+    const lineLocation = canvasHeight*(2/3);
 
-    //create numberline of entire container length
-    const subtractionContainer = document.createElement("div");
-        subtractionContainer.id = "subtractionContainer";
-        const subArrowContainer = document.createElement("div");
-        subArrowContainer.id= "subArrowContainer";
-        const subNumberLineDiv = document.createElement("div");
-        subNumberLineDiv.id = "subNumberLineDiv";        
-        const subHorizontalLine = document.createElement("div");
-        subHorizontalLine.id = "subHorizontalLine";
-        subNumberLineDiv.appendChild(subHorizontalLine);
-        subtractionContainer.appendChild(subArrowContainer);
-        subtractionContainer.appendChild(subNumberLineDiv);
-        pictureVisualDiv.appendChild(subtractionContainer);
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, lineLocation, canvasWidth, 3);  //creates number line
+    ctx.fillRect(canvasWidth-20, lineLocation - 7, 3, 15);  //creates first dash on number line
 
-        //place numA at end of numberline
-        const endVerticalContainer = document.createElement("div");
-        endVerticalContainer.classList.add("endVerticalContainer");
-        const endVerticalLine = document.createElement("div");
-        endVerticalLine.classList.add("verticalLine");
-        const endNumber = document.createElement("div")
-        endNumber.classList.add("countDisplay");
-        endNumber.innerHTML= numA;
-        endVerticalContainer.appendChild(endVerticalLine);
-        endVerticalContainer.appendChild(endNumber);
-        subHorizontalLine.appendChild(endVerticalContainer);
+    ctx.font = '20px Helvetica';
+    const textWidth = ctx.measureText(numA).width;
+    const centeredText = canvasWidth - 20 - textWidth / 2;
+    ctx.fillText(numA, centeredText, lineLocation + 30);  //puts numA on the number line
 }
-window.createSubtractionLine = createSubtractionLine;
 
-function fillInSubtractionNumberLine(numB) {
-    //run when enter is pressed
-    //fill in numberline
-    //calculate lines- every 100, 10, and 1 for numB
-    let hundreds;
-    let tens;
-    let ones;
-    const horizontalLine = document.getElementById("subHorizontalLine");
-    const arrowContainer = document.getElementById("subArrowContainer");
+function animateSubtraction(numA, numB) {
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+    const lineLocation = canvasHeight*(2/3);
 
-    let total = parseInt(numA);
-    
-    const numBArray = numB.split("")
-    
-     if (numBArray.length === 3) {
-      hundreds = parseInt(numBArray[0]);
-      tens = parseInt(numBArray[1]);
-      ones = parseInt(numBArray[2]);
-     } else if (numBArray.length === 2) {
-      hundreds = 0;
-      tens = parseInt(numBArray[0]);
-      ones = parseInt(numBArray[1]);
-     } else if (numBArray.length === 1) {
-      hundreds = 0;
-      tens = 0;
-      ones = parseInt(numBArray[0]);
-     }
-     //calculate numberline 
-     let units = (horizontalLine.offsetWidth-45)/((hundreds*4)+(tens*2)+ones);
-     if (hundreds > 0 && units > 100) {
-        units=100;
-     }
-     if (hundreds === 0 && units > 200) {
-        units=200;
-     }
-    
-    //arrow animation setup
-    const spriteWidth = 172;
+    let frameY = 0;
+    let arrowState = 'leftArrow'
+    const arrowImage = new Image();
+    arrowImage.src = 'arrowSprites.png';
+    const spriteWidth = 190;
     const spriteHeight = 130;
+
+    let gameFrame = 0;
+    const staggerFrames = 10;  //a lower number gives a higher speed to the animation
+
+    let locationDash = canvasWidth - 20;  //starting x px value of the initial dash on number line
+    let currentNum = parseFloat(numA); //keeps track of current number on number line
+
+    let hundreds = Math.floor(numB/100) * 100;
+    let tens = Math.floor((numB - hundreds)/10) * 10;
+    let ones = numB - hundreds - tens
+    let units = (canvasWidth - 40) / ((hundreds*4/100)+(tens*2/10)+ones);
+    if (hundreds === 0 && units > 200) {
+        units = 200;
+    } else if (units > 100) {
+        units = 100;
+    }
+
+    const hundredsScale = 4;
+    const tensScale = 2;
+
+    // measures and then centers the text above the arrows +1, +10, +100
+    const textWidth100 = ctx.measureText("+100").width;
+    const centeredText100 = (units*hundredsScale)/2 + textWidth100/4;
+    const textWidth10 = ctx.measureText("+10").width;
+    const centeredText10 = (units*tensScale)/2 + textWidth10/4;
+    const textWidth1 = ctx.measureText("+1").width;
+    const centeredText1 = (units)/2 + textWidth1/4;
+
+    const arrowScale = 127;     //width of arrow in px, equivalent to one unit on canvas
+    const rightMarginPX = 36;    //left margin on sprite
+    const topMarginAndArrowPX = 106;   //top margin + height of arrow on sprite
+    const rightMargin = (rightMarginPX/arrowScale)*units;     //left margin scaled in terms of units
+    const topMarginAndArrow = (topMarginAndArrowPX/arrowScale)*units;  //top margin & arrow scaled in terms of units
+    const arrowWidth = (spriteWidth/arrowScale)*units;      //arrowWidth scaled in terms of units
+    const arrowHeight = (spriteHeight/arrowScale)*units;        //arrowHeight scaled in terms of units
+
+    const starImage = new Image();
+    starImage.src = 'starV1.png';
+    const starPXWidth = 405;
+    const starPXHeight = 388;
+    const starWidth = units/3;      // creates a star that is 1/3 as wide as the arrow
+    const starHeight = (starPXHeight/starPXWidth)*units/3;  // scales down the height to align with the scale of the width
+
+
     const spriteAnimations = [];
     const animationStates = [
         {
@@ -79,7 +83,7 @@ function fillInSubtractionNumberLine(numB) {
             frames: 6,
         },
     ]
-    
+
     let accumulator = 0;
     animationStates.forEach((state, index) => {
         let frames = {
@@ -93,136 +97,141 @@ function fillInSubtractionNumberLine(numB) {
         accumulator += state.frames;
         spriteAnimations[state.name] = frames;
     });
-    
-    function createArrows(width, increment) {
-        //arrow
-        const arrowDiv = document.createElement("div");
-        arrowDiv.classList.add("arrowDiv");
-        const arrowCanvas = document.createElement("canvas");
-        const ctx = arrowCanvas.getContext("2d");
-        arrowCanvas.classList.add("arrowCanvas");
-        //set div widths
-            arrowCanvas.width = width;
-            //height needs to match the width 190/1.46=130 -- keeps ratio the same
-            arrowCanvas.height = (width/1.46);
-            arrowCanvas.style.width = `${width}px`;
-            arrowCanvas.style.height = `${width / 1.46}px`;       
-        arrowDiv.appendChild(arrowCanvas);
-        arrowContainer.appendChild(arrowDiv);
-        
-        // Animation
-    const arrowImage = new Image();
-    arrowImage.src = 'arrowSprites.png';
-    
-    const staggerFrames = 15; // The bigger the number, the slower the animation
-    const totalFrames = spriteAnimations['leftArrow'].loc.length;
-    let gameFrame = 0;
-    let frameY;
-    
-    arrowImage.onload = () => {
-        function animate() {
-            ctx.clearRect(0, 0, arrowCanvas.width, arrowCanvas.height); // Clear canvas
-            let position = Math.floor(gameFrame/staggerFrames);
-            // const position = Math.floor(gameFrame / staggerFrames) % totalFrames; // Loop frames
-            // const frameY = spriteAnimations['rightArrow'].loc[position].y;
-            if(position < totalFrames) {
-                if (gameFrame === 0) {
-                    const starContainer = document.createElement("div");
-                    starContainer.classList.add("starContainer");
-                    starContainer.style.width= `${arrowCanvas.width/2}px`;
-                    starContainer.style.height = `${arrowCanvas.width/2}px`;
-    
-                    const star = document.createElement("div");
-                    star.classList.add("fivePointedStar");
-                    star.style.fontSize = `${arrowCanvas.width/4}px`;
-    
-                    const starNumber = document.createElement("div");
-                    starNumber.classList.add("starNumber");
-                    starNumber.innerHTML = `-${increment}`; // Add your number here
-    
-                    // Append star and number to the container
-                    starContainer.appendChild(star);
-                    starContainer.appendChild(starNumber);
-    
-                    // Append the container to the arrow div
-                    arrowDiv.appendChild(starContainer);
-                }
-                // Remove the star when the animation is done
-                const star = arrowDiv.querySelector(".fivePointedStar");
-                if (gameFrame > 60 && star) {
-                    star.remove();
-                }
 
-            frameY = spriteAnimations['leftArrow'].loc[position].y;
-            ctx.drawImage(
-                arrowImage,
-                0, frameY, spriteWidth, spriteHeight, // Source rectangle
-                -8, 0, arrowCanvas.width-1, arrowCanvas.height // Destination rectangle
-            );
+    // Created an array to store all pieces of image to be drawn each time animate is called
+    const animationArray = [];
+
+    function animate() {
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        createSubtractionLine(numA);
+
+        animationArray.forEach((drawFunction) => drawFunction());
+
+        let totalFrames = spriteAnimations[arrowState].loc.length;
+        let position = Math.floor(gameFrame/staggerFrames) % totalFrames;
+
+        if(!(hundreds === 0 && tens === 0 && ones === 0)) {
+            frameY = spriteAnimations[arrowState].loc[position].y;
+            if(hundreds != 0) {
+                ctx.drawImage(arrowImage,  //source file of sprite page
+                    0,      // X location to pull from source file
+                    frameY,   // Y location to pull from source file & also current frame
+                    spriteWidth,    
+                    spriteHeight, 
+                    locationDash - units*hundredsScale - rightMargin*hundredsScale,        // canvas placement of arrow in X direction
+                    lineLocation - topMarginAndArrow*hundredsScale,     // canvas placement of arrow in Y direction
+                    arrowWidth*hundredsScale,       // canvas size of arrow width
+                    arrowHeight*hundredsScale)      // canvas size of arrow height
+                    
+                    ctx.drawImage(starImage,  //source file of star image
+                    locationDash - units*hundredsScale/2 - rightMargin*hundredsScale/2,        // canvas placement of arrow in X direction
+                    lineLocation - topMarginAndArrow*hundredsScale - starHeight*hundredsScale/2,     // canvas placement of arrow in Y direction
+                    starWidth*hundredsScale,       // canvas size of star width
+                    starHeight*hundredsScale)      // canvas size of star height
+                    ctx.fillText("-100", locationDash - centeredText100, lineLocation - topMarginAndArrow*hundredsScale + 10);
+                    
+                    if((staggerFrames*totalFrames-1) === gameFrame%(staggerFrames*totalFrames)) {
+                    animationArray.push(((frame, dashX) => () => 
+                        ctx.drawImage(arrowImage, 0, frame, spriteWidth, spriteHeight, 
+                            dashX - units*hundredsScale - rightMargin*hundredsScale,        
+                            lineLocation - topMarginAndArrow*hundredsScale,       
+                            arrowWidth*hundredsScale,                             
+                            arrowHeight*hundredsScale))                      
+                            (frameY, locationDash))  
+                    animationArray.push(((dashX) => () => {
+                    ctx.fillText("-100", dashX - centeredText100, lineLocation - topMarginAndArrow*hundredsScale + 10);
+                    })(locationDash));   
+                    locationDash -= units*hundredsScale;
+                    currentNum -= 100;
+                    animationArray.push(((dashX) => () => ctx.fillRect(dashX, lineLocation - 7, 3, 15))(locationDash));
+                    animationArray.push(((current, dashX) => () => {
+                        const textWidth = ctx.measureText(current).width;
+                        const centeredText = dashX - textWidth / 2;
+                        ctx.fillText(current, centeredText, lineLocation + 25)
+                    })(currentNum, locationDash));
+                    hundreds -= 100;
+                }
+            } else if(tens != 0) {
+                ctx.drawImage(arrowImage, 0, frameY, spriteWidth, spriteHeight, 
+                    locationDash - units*tensScale - rightMargin*tensScale,      
+                    lineLocation - topMarginAndArrow*tensScale,     
+                    arrowWidth*tensScale,      
+                    arrowHeight*tensScale) 
+                    
+                ctx.drawImage(starImage,  
+                    locationDash - units*tensScale/2 - rightMargin*tensScale/2,        
+                    lineLocation - topMarginAndArrow*tensScale - starHeight*tensScale/2,   
+                    starWidth*tensScale,      
+                    starHeight*tensScale)    
+                ctx.fillText("-10", locationDash - centeredText10, lineLocation - topMarginAndArrow*tensScale + 10);     
+                    
+                if((staggerFrames*totalFrames-1) === gameFrame%(staggerFrames*totalFrames)) {
+                    animationArray.push(((frame, dashX) => () => 
+                        ctx.drawImage(arrowImage, 0, frame, spriteWidth, spriteHeight, 
+                            dashX - units*tensScale - rightMargin*tensScale,        
+                            lineLocation - topMarginAndArrow*tensScale,       
+                            arrowWidth*tensScale,                             
+                            arrowHeight*tensScale))                      
+                            (frameY, locationDash))  
+                    animationArray.push(((dashX) => () => {
+                        ctx.fillText("-10", dashX - centeredText10, lineLocation - topMarginAndArrow*tensScale + 10);
+                    })(locationDash));     
+                    locationDash -= units*tensScale;
+                    currentNum -= 10;
+                    animationArray.push(((dashX) => () => ctx.fillRect(dashX, lineLocation - 7, 3, 15))(locationDash));
+                    animationArray.push(((current, dashX) => () => {
+                        const textWidth = ctx.measureText(current).width;
+                        const centeredText = dashX - textWidth / 2;
+                        ctx.fillText(current, centeredText, lineLocation + 25)
+                    })(currentNum, locationDash));
+                    tens -= 10;
+                }
+            } else if(ones != 0) {
+                ctx.drawImage(arrowImage, 0, frameY, spriteWidth, spriteHeight, 
+                    locationDash - units - rightMargin,      
+                    lineLocation - topMarginAndArrow,     
+                    arrowWidth,      
+                    arrowHeight) 
+                ctx.drawImage(starImage, 
+                    locationDash - units/2 - rightMargin/2,     
+                    lineLocation - topMarginAndArrow - starHeight/2, 
+                    starWidth,   
+                    starHeight)   
+                ctx.fillText("-1", locationDash - centeredText1, lineLocation - topMarginAndArrow + 10); 
+                     
+                if((staggerFrames*totalFrames-1) === gameFrame%(staggerFrames*totalFrames)) {
+                    animationArray.push(((frame, dashX) => () => 
+                        ctx.drawImage(arrowImage, 0, frame, spriteWidth, spriteHeight, 
+                            dashX - units - rightMargin,        
+                            lineLocation - topMarginAndArrow,       
+                            arrowWidth,                             
+                            arrowHeight))                      
+                            (frameY, locationDash))   
+                    animationArray.push(((dashX) => () => {
+                            ctx.fillText("-1", dashX - centeredText1, lineLocation - topMarginAndArrow + 10);
+                    })(locationDash)); 
+
+                    locationDash -= units;
+                    currentNum -= 1;
+                    animationArray.push(((dashX) => () => ctx.fillRect(dashX, lineLocation - 7, 3, 15))(locationDash));
+                    animationArray.push(((current, dashX) => () => {
+                        const textWidth = ctx.measureText(current).width;
+                        const centeredText = dashX - textWidth / 2;
+                        ctx.fillText(current, centeredText, lineLocation + 25)
+                    })(currentNum, locationDash));
+                    ones--;
+                }
+            };
             gameFrame++;
-            requestAnimationFrame(animate); // Continue animation
-        } else {
-            frameY = spriteAnimations['leftArrow'].loc[5].y;
-            ctx.drawImage(
-                arrowImage,
-                0, frameY, spriteWidth, spriteHeight, // Source rectangle
-                -8, 0, arrowCanvas.width-1, arrowCanvas.height// Destination rectangle
-            );
-            }
+            requestAnimationFrame(animate);
+
         }
-        animate(); // Start animation
+
+        
     }
-    
-    }
-    
-    function createCountingDivs(width, increment) {
-    
-            //counting lines and numbers
-            const countingContainer = document.createElement("div");
-            countingContainer.classList.add("subCountingContainer");
-            countingContainer.style.width= `${width}px`;
-            const countingLine = document.createElement("div");
-            countingLine.classList.add("verticalLine");
-            const countNumber = document.createElement("div");
-            countNumber.classList.add("countDisplay");
-            countNumber.innerHTML= total-=increment;
-            if (width <= 45) {
-                countNumber.style.fontSize= "15px";
-            }
-            if (width <= 30) {
-                countNumber.classList.add("stack");
-            }
-            countingContainer.appendChild(countingLine);
-            countingContainer.appendChild(countNumber);  
-            horizontalLine.appendChild(countingContainer);
-    
-    }
-    
-    if (hundreds > 0) { 
-        for (let i = 0; i < hundreds; i++) {
-            createCountingDivs(units * 4, 100);
-    
-            // Delay each arrow creation by 1 second per iteration
-            setTimeout(() => createArrows(units * 4, 100), i * 1200);
-        }
-    }
-    
-    if (tens > 0) {
-        for (let i = 0; i < tens; i++) {
-            createCountingDivs(units * 2, 10);
-    
-            // Delay by total time spent on hundreds plus 1 second per iteration
-            setTimeout(() => createArrows(units * 2, 10), (1200 * hundreds) + (i * 1200));
-        }
-    }
-    
-    if (ones > 0) {
-        for (let i = 0; i < ones; i++) {
-            createCountingDivs(units, 1);
-    
-            // Delay by total time spent on hundreds and tens plus 1 second per iteration
-            setTimeout(() => createArrows(units, 1), (1200 * (hundreds + tens)) + (i * 1200));
-        }
-    }
-    }
-    window.fillInSubtractionNumberLine = fillInSubtractionNumberLine;
+    animate(); 
+
+}
+
+window.createSubtractionLine = createSubtractionLine;
+window.animateSubtraction = animateSubtraction;

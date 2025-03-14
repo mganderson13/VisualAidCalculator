@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elementary Ed Visual Calc</title>
+    <title>Visual Calculator</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://kit.fontawesome.com/915416ef09.js" crossorigin="anonymous"></script>
     <script src="addition.js" defer></script>
@@ -48,7 +48,7 @@
                 <button id="add" class="oper" onclick="readOper('+')">+</button>
                 <button id="subtract" class="oper" onclick="readOper('-')">-</button>
                 <button id="multiply" class="oper" onclick="readOper('*')">x</button>
-                <button id="divide" class="oper" onclick="readOper('/')">/</button>
+                <button id="divide" class="oper" onclick="readOper('/')">÷</button>
             </div>
         </div>
     </div>
@@ -60,30 +60,5 @@
         </div>
     </div>
     </div>
-    
-<!-- firebase sdk -->
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-analytics.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-          apiKey: "AIzaSyCa4oHMZC0o3_1qTQgMqwj0yawb6kdGOz4",
-          authDomain: "elementary-ed-visual-calc.firebaseapp.com",
-          projectId: "elementary-ed-visual-calc",
-          storageBucket: "elementary-ed-visual-calc.firebasestorage.app",
-          messagingSenderId: "429223445849",
-          appId: "1:429223445849:web:3e95458902f4d389cef848",
-          measurementId: "G-WPZ1KHGW0C"
-        };
-      
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-      </script>
 </body>
 </html>
