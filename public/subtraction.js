@@ -3,7 +3,7 @@ function createSubtractionLine(numA) {
     const ctx = canvas.getContext('2d');
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
-    const lineLocation = canvasHeight*(2/3);
+    const lineLocation = canvasHeight*(9/13);
 
     ctx.fillStyle = 'black';
     ctx.fillRect(0, lineLocation, canvasWidth, 3);  //creates number line
@@ -41,7 +41,7 @@ function animateSubtraction(numA, numB) {
     let units = (canvasWidth - 40) / ((hundreds*4/100)+(tens*2/10)+ones);
     if (hundreds === 0 && units > 200) {
         units = 200;
-    } else if (units > 100) {
+    } else if (hundreds > 0 && units > 100) {
         units = 100;
     }
 
