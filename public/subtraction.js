@@ -3,7 +3,7 @@ function createSubtractionLine(numA) {
     const ctx = canvas.getContext('2d');
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
-    const lineLocation = canvasHeight*(9/13);
+    const lineLocation = canvasHeight*(2/3);
 
     ctx.fillStyle = 'black';
     ctx.fillRect(0, lineLocation, canvasWidth, 3);  //creates number line
